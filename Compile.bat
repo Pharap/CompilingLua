@@ -2,34 +2,72 @@
 :: Compiles Lua
 ::
 
-@REM Move down into src
+::
+:: Set up environment
+::
+
+:: Start local variable scope
+@SETLOCAL
+
+:: Locate 'vcvarsall.bat'
+@IF NOT "%VS120COMNTOOLS%"=="" @SET VSVARSALL=%VS120COMNTOOLS%..\..\VC\vcvarsall.bat
+@IF NOT "%VS140COMNTOOLS%"=="" @SET VSVARSALL=%VS140COMNTOOLS%..\..\VC\vcvarsall.bat
+@IF "%VSVARSALL%"=="" @GOTO ENDSETUP
+
+:: Identify the target architecture
+@IF NOT "%PROCESSOR_ARCHITECTURE%"=="" (
+	@IF "%PROCESSOR_ARCHITECTURE%"=="x86" @SET ARCH=x86
+	@IF "%PROCESSOR_ARCHITECTURE%"=="AMD64" @SET ARCH=amd64
+)
+@IF "%ARCH%"=="" @GOTO ENDSCRIPT
+
+:: Call the setup script
+@CALL "%VSVARSALL%" %ARCH%
+@ECHO ON
+
+:ENDSETUP
+
+::
+:: Process files
+::
+
+:: Move down into 'src'
 @PUSHD src
 
-@REM Clean up files from previous builds
-@DEL *.obj *.o *.dll *.exe
+:: Clean up files from previous builds
+@IF EXIST *.o @DEL *.o
+@IF EXIST *.obj @DEL *.obj
+@IF EXIST *.dll @DEL *.dll
+@IF EXIST *.exe @DEL *.exe
 
-@REM Compile all .c files into .obj
+:: Compile all .c files into .obj
 @CL /MD /O2 /c /DLUA_BUILD_AS_DLL *.c
 
-@REM Rename two special files
+:: Rename two special files
 @REN lua.obj lua.o
 @REN luac.obj luac.o
 
-@REM Link up all the other .objs into a .lib and .dll file
+:: Link up all the other .objs into a .lib and .dll file
 @LINK /DLL /IMPLIB:lua.lib /OUT:lua.dll *.obj
 
-@REM Link lua into an .exe
+:: Link lua into an .exe
 @LINK /OUT:lua.exe lua.o lua.lib
 
-@REM Create a static .lib
+:: Create a static .lib
 @LIB /OUT:lua-static.lib *.obj
 
-@REM Link luac into an .exe
+:: Link luac into an .exe
 @LINK /OUT:luac.exe luac.o lua-static.lib
 
+:: Move back up out of 'src'
 @POPD
 
-@REM Copy the library and executable files out from 'src'
+:: Copy the library and executable files out from 'src'
 @COPY /Y src\lua.exe lua.exe
 @COPY /Y src\luac.exe luac.exe
 @COPY /Y src\lua.dll lua.dll
+
+:ENDSCRIPT
+
+:: End local variable scope
+@ENDLOCAL
