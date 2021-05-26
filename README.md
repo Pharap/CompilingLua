@@ -20,7 +20,7 @@ A guide for compiling Lua for Windows, complete with script
 4. Download the `Compile.bat` file from this repo and move it into the extracted `lua-x.y.z` folder.
 5. Make sure you have `cl.exe`, `link.exe` and `lib.exe` either in your [`%PATH%` variable](https://en.wikipedia.org/wiki/PATH_(variable)) or in the extracted `lua-x.y.z` folder.
 6. Run `Compile.bat` either by double-clicking it or running it from command line.
-  * Windows may provide a security warning advising you not to run scripts from untrusted sources. If you have any doubts about whether or not you can trust the script then I advise that you _do not run it_ as I will not be held liable for any damages.
+    * Windows may provide a security warning advising you not to run scripts from untrusted sources. If you have any doubts about whether or not you can trust the script then I advise that you _do not run it_ as I will not be held liable for any damages.
   
 After step 6, there should be a copy of `lua.exe`, `luac.exe` and `lua.dll` present in the `lua-x.y.z` folder.
 * `lua.exe` is the Lua interpreter, which interprets and runs scripts, and provides a Lua [REPL](https://en.wikipedia.org/wiki/Read%E2%80%93eval%E2%80%93print_loop) if run without arguments.
