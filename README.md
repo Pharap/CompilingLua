@@ -14,9 +14,9 @@ A guide for compiling Lua for Windows, complete with script
 1. Go to the Lua [download area](https://www.lua.org/ftp/).
 2. Download the version of Lua that you want.
 3. Unzip the `.tar.gz` file using a decompression tool, giving you a folder of the form `lua-x.y.z`.
-  * Where `x.y.z` corresponds to the version number of the Lua version you have downloaded, e.g. `lua-5.3.5`.
-  * If you do not have a suitable decompression tool, I recommend [7Zip](https://www.7-zip.org/).
-  * You may need to extract twice, once for the `.gz` wrapper and once for the `.tar` archiving.
+    * Where `x.y.z` corresponds to the version number of the Lua version you have downloaded, e.g. `lua-5.3.5`.
+    * If you do not have a suitable decompression tool, I recommend [7Zip](https://www.7-zip.org/).
+    * You may need to extract twice, once for the `.gz` wrapper and once for the `.tar` archiving.
 4. Download the `Compile.bat` file from this repo and move it into the extracted `lua-x.y.z` folder.
 5. Make sure you have `cl.exe`, `link.exe` and `lib.exe` either in your [`%PATH%` variable](https://en.wikipedia.org/wiki/PATH_(variable)) or in the extracted `lua-x.y.z` folder.
 6. Run `Compile.bat` either by double-clicking it or running it from command line.
