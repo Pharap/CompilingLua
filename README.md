@@ -19,7 +19,11 @@ A guide for compiling Lua for Windows, complete with script
     * You may need to extract twice, once for the `.gz` wrapper and once for the `.tar` archiving.
 4. Download the `Compile.bat` file from this repo and move it into the extracted `lua-x.y.z` folder.
 5. Make sure you have `cl.exe`, `link.exe` and `lib.exe` either in your [`%PATH%` variable](https://en.wikipedia.org/wiki/PATH_(variable)) or in the extracted `lua-x.y.z` folder.
-6. Run `Compile.bat` either by double-clicking it or running it from command line.
+6. Open Developer Comand Prompt that is installed with Visual Studio or run **Change <Release> Depending on your visual studio installation
+   ```console
+   call "C:\Program Files\Microsoft Visual Studio\<Release>\Community\Common7\Tools\VsDevCmd.bat" -arch=x64
+   ```
+8. Run `Compile.bat` either by double-clicking it or running it from command line.
     * Windows may provide a security warning advising you not to run scripts from untrusted sources. If you have any doubts about whether or not you can trust the script then I advise that you _do not run it_ as I will not be held liable for any damages.
   
 After step 6, there should be a copy of `lua.exe`, `luac.exe` and `lua.dll` present in the `lua-x.y.z` folder.
