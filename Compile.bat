@@ -2,30 +2,53 @@
 :: Compiles Lua
 ::
 
+:: Start local variable scope
+@SETLOCAL
+
 ::
 :: Set up environment
 ::
 
-:: Start local variable scope
-@SETLOCAL
-
+::
 :: Locate 'vcvarsall.bat'
+::
+
+:: Visual Studio 2008
 @IF NOT "%VS90COMNTOOLS%"=="" @SET VSVARSALL=%VS90COMNTOOLS%..\..\VC\vcvarsall.bat
+
+:: Visual Studio 2010
 @IF NOT "%VS100COMNTOOLS%"=="" @SET VSVARSALL=%VS100COMNTOOLS%..\..\VC\vcvarsall.bat
+
+:: Visual Studio 2012
 @IF NOT "%VS110COMNTOOLS%"=="" @SET VSVARSALL=%VS110COMNTOOLS%..\..\VC\vcvarsall.bat
+
+:: Visual Studio 2013
 @IF NOT "%VS120COMNTOOLS%"=="" @SET VSVARSALL=%VS120COMNTOOLS%..\..\VC\vcvarsall.bat
+
+:: Visual Studio 2015
 @IF NOT "%VS140COMNTOOLS%"=="" @SET VSVARSALL=%VS140COMNTOOLS%..\..\VC\vcvarsall.bat
+
+:: If a known version of Visual Studio could not be found
+:: end the setup phase and hope everything will work anyway.
 @IF "%VSVARSALL%"=="" @GOTO ENDSETUP
 
 :: Identify the target architecture
 @IF NOT "%PROCESSOR_ARCHITECTURE%"=="" (
+	:: 32-bit Systems
 	@IF "%PROCESSOR_ARCHITECTURE%"=="x86" @SET ARCH=x86
+	
+	:: 64-bit Systems
 	@IF "%PROCESSOR_ARCHITECTURE%"=="AMD64" @SET ARCH=amd64
 )
+
+:: If the native architecture could not be identified,
+:: assume everything is going to fail and jump to the end of the script.
 @IF "%ARCH%"=="" @GOTO ENDSCRIPT
 
 :: Call the setup script
 @CALL "%VSVARSALL%" %ARCH%
+
+:: Enable logging
 @ECHO ON
 
 :ENDSETUP
@@ -43,7 +66,7 @@
 @IF EXIST *.dll @DEL *.dll
 @IF EXIST *.exe @DEL *.exe
 
-:: Compile all .c files into .obj
+:: Compile all .c files into .obj files
 @CL /MD /O2 /c /DLUA_BUILD_AS_DLL *.c
 
 :: Rename two special files
