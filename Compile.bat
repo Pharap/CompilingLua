@@ -10,9 +10,9 @@
 @SETLOCAL
 
 :: Locate 'vcvarsall.bat'
-@IF NOT "%VS160COMNTOOLS%"=="" @SET VSVARSALL=%VS160COMNTOOLS%..\..\VC\vcvarsall.bat
-@IF NOT "%VS140COMNTOOLS%"=="" @SET VSVARSALL=%VS140COMNTOOLS%..\..\VC\vcvarsall.bat
 @IF NOT "%VS120COMNTOOLS%"=="" @SET VSVARSALL=%VS120COMNTOOLS%..\..\VC\vcvarsall.bat
+@IF NOT "%VS140COMNTOOLS%"=="" @SET VSVARSALL=%VS140COMNTOOLS%..\..\VC\vcvarsall.bat
+@IF NOT "%VS160COMNTOOLS%"=="" @SET VSVARSALL=%VS160COMNTOOLS%..\..\VC\vcvarsall.bat
 @IF "%VSVARSALL%"=="" @GOTO ENDSETUP
 
 :: Identify the target architecture
