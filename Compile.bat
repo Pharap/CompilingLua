@@ -28,9 +28,14 @@
 :: Visual Studio 2015
 @IF NOT "%VS140COMNTOOLS%"=="" @SET VSVARSALL=%VS140COMNTOOLS%..\..\VC\vcvarsall.bat
 
-:: If a known version of Visual Studio could not be found
-:: end the setup phase and hope everything will work anyway.
-@IF "%VSVARSALL%"=="" @GOTO ENDSETUP
+:: If a known version of Visual Studio could not be found...
+@IF "%VSVARSALL%"=="" (
+	:: Warn the user.
+	@ECHO Could not find a known Visual Studio version.
+
+	:: Try to compile the code anyway.
+	@GOTO ENDSETUP
+)
 
 :: Identify the target architecture
 @IF NOT "%PROCESSOR_ARCHITECTURE%"=="" (
@@ -41,9 +46,14 @@
 	@IF "%PROCESSOR_ARCHITECTURE%"=="AMD64" @SET ARCH=amd64
 )
 
-:: If the native architecture could not be identified,
-:: assume everything is going to fail and jump to the end of the script.
-@IF "%ARCH%"=="" @GOTO ENDSCRIPT
+:: If the native architecture could not be identified...
+@IF "%ARCH%"=="" (
+	:: Log an error to the standard error stream.
+	@ECHO Could not identify processor architecture. 1>&2
+
+	:: Assume everything is going to fail and jump to the end of the script.
+	@GOTO ENDSCRIPT
+)
 
 :: Call the setup script
 @CALL "%VSVARSALL%" %ARCH%
